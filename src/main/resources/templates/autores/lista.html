@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Autores</title>
+</head>
+<body>
+    <h1>Gestão de Autores</h1>
+
+    <p th:if="${mensagem}" style="color: green" th:text="${mensagem}"></p>
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <a th:href="@{/autores/novo}">+ Novo Autor</a> | <a th:href="@{/}">Voltar ao Menu</a>
+
+    <hr />
+
+    <h2>Autores Cadastrados</h2>
+    <p th:if="${#lists.isEmpty(autores)}">Nenhum autor cadastrado ainda.</p>
+    <table border="1" cellpadding="6" th:unless="${#lists.isEmpty(autores)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Nacionalidade</th>
+                <th>Obras Publicadas</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="autor : ${autores}">
+                <td th:text="${autor.id}"></td>
+                <td th:text="${autor.nome}"></td>
+                <td th:text="${autor.nacionalidade}"></td>
+                <td th:text="${autor.obrasPublicadas}"></td>
+                <td>
+                    <a th:href="@{/autores/{id}(id=${autor.id})}">Editar</a>
+                    <form th:action="@{/autores/{id}/excluir(id=${autor.id})}" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Excluir este autor?')">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Categorias</title>
+</head>
+<body>
+    <h1>Gestão de Categorias</h1>
+
+    <p th:if="${mensagem}" style="color: green" th:text="${mensagem}"></p>
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <a th:href="@{/categorias/novo}">+ Nova Categoria</a> | <a th:href="@{/}">Voltar ao Menu</a>
+
+    <hr />
+
+    <h2>Categorias Cadastradas</h2>
+    <p th:if="${#lists.isEmpty(categorias)}">Nenhuma categoria cadastrada ainda.</p>
+    <table border="1" cellpadding="6" th:unless="${#lists.isEmpty(categorias)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="categoria : ${categorias}">
+                <td th:text="${categoria.id}"></td>
+                <td th:text="${categoria.nome}"></td>
+                <td th:text="${categoria.descricao}"></td>
+                <td>
+                    <a th:href="@{/categorias/{id}(id=${categoria.id})}">Editar</a>
+                    <form th:action="@{/categorias/{id}/excluir(id=${categoria.id})}" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Excluir esta categoria?')">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

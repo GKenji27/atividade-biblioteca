@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Utilizadores</title>
+</head>
+<body>
+    <h1>Gestão de Utilizadores</h1>
+
+    <p th:if="${mensagem}" style="color: green" th:text="${mensagem}"></p>
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <a th:href="@{/usuarios/novo}">+ Novo Utilizador</a> | <a th:href="@{/}">Voltar ao Menu</a>
+
+    <hr />
+
+    <h2>Utilizadores Cadastrados</h2>
+    <p th:if="${#lists.isEmpty(usuarios)}">Nenhum utilizador cadastrado ainda.</p>
+    <table border="1" cellpadding="6" th:unless="${#lists.isEmpty(usuarios)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Matrícula</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.id}"></td>
+                <td th:text="${usuario.nome}"></td>
+                <td th:text="${usuario.email}"></td>
+                <td th:text="${usuario.matricula}"></td>
+                <td>
+                    <a th:href="@{/usuarios/{id}(id=${usuario.id})}">Editar</a>
+                    <form th:action="@{/usuarios/{id}/excluir(id=${usuario.id})}" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Excluir este utilizador?')">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

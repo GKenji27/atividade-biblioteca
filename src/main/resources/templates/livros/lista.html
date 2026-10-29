@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Livros</title>
+</head>
+<body>
+    <h1>Gestão de Livros</h1>
+
+    <p th:if="${mensagem}" style="color: green" th:text="${mensagem}"></p>
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <a th:href="@{/livros/novo}">+ Novo Livro</a> | <a th:href="@{/}">Voltar ao Menu</a>
+
+    <hr />
+
+    <h2>Livros Cadastrados</h2>
+    <p th:if="${#lists.isEmpty(livros)}">Nenhum livro cadastrado ainda.</p>
+    <table border="1" cellpadding="6" th:unless="${#lists.isEmpty(livros)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoria</th>
+                <th>ISBN</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="livro : ${livros}">
+                <td th:text="${livro.id}"></td>
+                <td th:text="${livro.titulo}"></td>
+                <td th:text="${livro.autor.nome}"></td>
+                <td th:text="${livro.categoria.nome}"></td>
+                <td th:text="${livro.isbn}"></td>
+                <td th:text="${livro.disponivel ? 'Disponível' : 'Emprestado'}"></td>
+                <td>
+                    <a th:href="@{/livros/{id}(id=${livro.id})}">Editar</a>
+                    <form th:action="@{/livros/{id}/excluir(id=${livro.id})}" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Excluir este livro?')">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

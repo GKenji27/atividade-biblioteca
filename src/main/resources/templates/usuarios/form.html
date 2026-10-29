@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registo de Utilizador</title>
+</head>
+<body>
+    <h1 th:text="${usuario.id != null} ? 'Editar Utilizador' : 'Cadastrar Utilizador'"></h1>
+
+    <form th:object="${usuario}"
+          th:action="${usuario.id != null} ? @{/usuarios/{id}(id=${usuario.id})} : @{/usuarios}"
+          method="post">
+        <div>
+            <label>Nome Completo:</label>
+            <input type="text" th:field="*{nome}" required />
+        </div>
+        <br />
+        <div>
+            <label>E-mail:</label>
+            <input type="email" th:field="*{email}" required />
+        </div>
+        <br />
+        <div>
+            <label>Matrícula / ID:</label>
+            <input type="text" th:field="*{matricula}" required />
+        </div>
+        <br />
+        <button type="submit" th:text="${usuario.id != null} ? 'Salvar Alterações' : 'Cadastrar Utilizador'"></button>
+        <a th:href="@{/usuarios}">Cancelar</a>
+    </form>
+</body>
+</html>

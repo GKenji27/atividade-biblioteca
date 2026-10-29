@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registo de Autor</title>
+</head>
+<body>
+    <h1 th:text="${autor.id != null} ? 'Editar Autor' : 'Cadastrar Autor'"></h1>
+
+    <form th:object="${autor}"
+          th:action="${autor.id != null} ? @{/autores/{id}(id=${autor.id})} : @{/autores}"
+          method="post">
+        <div>
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" required />
+        </div>
+        <br />
+        <div>
+            <label>Nacionalidade:</label>
+            <input type="text" th:field="*{nacionalidade}" required />
+        </div>
+        <br />
+        <div>
+            <label>Obras Publicadas:</label>
+            <input type="number" th:field="*{obrasPublicadas}" min="0" required />
+        </div>
+        <br />
+        <button type="submit" th:text="${autor.id != null} ? 'Salvar Alterações' : 'Cadastrar Autor'"></button>
+        <a th:href="@{/autores}">Cancelar</a>
+    </form>
+</body>
+</html>

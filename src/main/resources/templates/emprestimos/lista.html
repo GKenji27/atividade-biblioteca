@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Empréstimos</title>
+</head>
+<body>
+    <h1>Gestão de Empréstimos</h1>
+
+    <p th:if="${mensagem}" style="color: green" th:text="${mensagem}"></p>
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <a th:href="@{/emprestimos/novo}">+ Novo Empréstimo</a> | <a th:href="@{/}">Voltar ao Menu</a>
+
+    <hr />
+
+    <h2>Empréstimos Registados</h2>
+    <p th:if="${#lists.isEmpty(emprestimos)}">Nenhum empréstimo registado ainda.</p>
+    <table border="1" cellpadding="6" th:unless="${#lists.isEmpty(emprestimos)}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Livro</th>
+                <th>Utilizador</th>
+                <th>Data do Empréstimo</th>
+                <th>Devolução Prevista</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="emprestimo : ${emprestimos}">
+                <td th:text="${emprestimo.id}"></td>
+                <td th:text="${emprestimo.livro.titulo}"></td>
+                <td th:text="${emprestimo.usuario.nome}"></td>
+                <td th:text="${emprestimo.dataEmprestimo}"></td>
+                <td th:text="${emprestimo.dataDevolucao}"></td>
+                <td>
+                    <span th:if="${emprestimo.devolvido}">Devolvido</span>
+                    <span th:unless="${emprestimo.devolvido}"
+                          th:text="${emprestimo.atrasado ? 'ATRASADO' : 'Em aberto'}"></span>
+                </td>
+                <td th:unless="${emprestimo.devolvido}">
+                    <form th:action="@{/emprestimos/{id}/devolver(id=${emprestimo.id})}" method="post" style="display:inline">
+                        <button type="submit" onclick="return confirm('Registar devolução?')">Devolver</button>
+                    </form>
+                </td>
+                <td th:if="${emprestimo.devolvido}">—</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

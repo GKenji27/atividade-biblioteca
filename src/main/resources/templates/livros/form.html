@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registo de Livro</title>
+</head>
+<body>
+    <h1 th:text="${livro.id != null} ? 'Editar Livro' : 'Cadastrar Livro'"></h1>
+
+    <p th:if="${erro}" style="color: red" th:text="${erro}"></p>
+
+    <form th:object="${livro}"
+          th:action="${livro.id != null} ? @{/livros/{id}(id=${livro.id})} : @{/livros}"
+          method="post">
+        <div>
+            <label>Título:</label>
+            <input type="text" th:field="*{titulo}" required />
+        </div>
+        <br />
+        <div>
+            <label>Autor:</label>
+            <select th:field="*{autor.id}" required>
+                <option value="">Selecione o autor...</option>
+                <option th:each="autor : ${autores}"
+                        th:value="${autor.id}"
+                        th:text="${autor.nome}"></option>
+            </select>
+        </div>
+        <br />
+        <div>
+            <label>Categoria:</label>
+            <select th:field="*{categoria.id}" required>
+                <option value="">Selecione a categoria...</option>
+                <option th:each="categoria : ${categorias}"
+                        th:value="${categoria.id}"
+                        th:text="${categoria.nome}"></option>
+            </select>
+        </div>
+        <br />
+        <div>
+            <label>ISBN:</label>
+            <input type="text" th:field="*{isbn}" required />
+        </div>
+        <br />
+        <button type="submit" th:text="${livro.id != null} ? 'Salvar Alterações' : 'Cadastrar'"></button>
+        <a th:href="@{/livros}">Cancelar</a>
+    </form>
+</body>
+</html>

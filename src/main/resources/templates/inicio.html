@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Biblioteca</title>
+</head>
+<body>
+    <h1 th:text="'Sistema de Biblioteca'"></h1>
+    <p>Bem-vindo ao Sistema Integrado de Gestão da Biblioteca!</p>
+
+    <hr />
+
+    <nav>
+        <h2>Menu Principal</h2>
+        <ul>
+            <li><a th:href="@{/livros}">Gestão de Livros</a></li>
+            <li><a th:href="@{/autores}">Gestão de Autores</a></li>
+            <li><a th:href="@{/categorias}">Gestão de Categorias</a></li>
+            <li><a th:href="@{/usuarios}">Gestão de Utilizadores</a></li>
+            <li><a th:href="@{/emprestimos}">Gestão de Empréstimos</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

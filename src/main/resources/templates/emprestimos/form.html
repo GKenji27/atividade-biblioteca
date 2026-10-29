@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registo de Empréstimo</title>
+</head>
+<body>
+    <h1>Registar Empréstimo</h1>
+    <form th:object="${emprestimo}" action="/emprestimos" method="post">
+        <div>
+            <label>Livro:</label>
+            <select name="livroId" required>
+                <option value="">Selecione o livro...</option>
+                <option th:each="livro : ${livros}"
+                        th:value="${livro.id}"
+                        th:text="${livro.titulo + ' - ' + livro.autor.nome}"></option>
+            </select>
+        </div>
+        <br />
+        <div>
+            <label>Utilizador:</label>
+            <select name="usuarioId" required>
+                <option value="">Selecione o utilizador...</option>
+                <option th:each="usuario : ${usuarios}"
+                        th:value="${usuario.id}"
+                        th:text="${usuario.nome}"></option>
+            </select>
+        </div>
+        <br />
+        <div>
+            <label>Data do Empréstimo:</label>
+            <input type="date" th:field="*{dataEmprestimo}" required />
+        </div>
+        <br />
+        <div>
+            <label>Data Limite de Devolução:</label>
+            <input type="date" th:field="*{dataDevolucao}" required />
+        </div>
+        <br />
+        <button type="submit">Registar Empréstimo</button>
+    </form>
+</body>
+</html>

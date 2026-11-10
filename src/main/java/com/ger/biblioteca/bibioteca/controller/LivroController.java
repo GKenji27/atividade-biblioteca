@@ -59,13 +59,14 @@ public class LivroController {
     @PostMapping("/{id}")
     public String atualizarLivro(@PathVariable Long id,
                                  @ModelAttribute Livro livro,
-                                 @RequestParam(required = false) Long autorId,
-                                 @RequestParam(required = false) Long categoriaId,
                                  RedirectAttributes redirectAttributes) {
         Livro salvo = livroRepository.findById(id).orElse(null);
         if (salvo == null) {
             return "redirect:/livros";
         }
+
+        Long autorId = (livro.getAutor() != null) ? livro.getAutor().getId() : null;
+        Long categoriaId = (livro.getCategoria() != null) ? livro.getCategoria().getId() : null;
 
         salvo.setTitulo(livro.getTitulo());
         salvo.setIsbn(livro.getIsbn());
@@ -108,9 +109,10 @@ public class LivroController {
 
     @PostMapping
     public String cadastrarLivro(@ModelAttribute Livro livro,
-                                 @RequestParam(required = false) Long autorId,
-                                 @RequestParam(required = false) Long categoriaId,
                                  RedirectAttributes redirectAttributes) {
+        Long autorId = (livro.getAutor() != null) ? livro.getAutor().getId() : null;
+        Long categoriaId = (livro.getCategoria() != null) ? livro.getCategoria().getId() : null;
+
         if (autorId == null || categoriaId == null) {
             redirectAttributes.addFlashAttribute("erro",
                     "Para cadastrar um livro, selecione um autor e uma categoria.");

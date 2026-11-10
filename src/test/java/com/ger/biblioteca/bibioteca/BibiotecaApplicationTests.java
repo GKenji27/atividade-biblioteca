@@ -91,8 +91,8 @@ class BibiotecaApplicationTests {
 
 		mockMvc.perform(post("/livros")
 						.param("titulo", "Dom Casmurro")
-						.param("autorId", autor.getId().toString())
-						.param("categoriaId", categoria.getId().toString())
+						.param("autor.id", autor.getId().toString())
+						.param("categoria.id", categoria.getId().toString())
 						.param("isbn", "9788535902778"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrl("/livros"));
@@ -162,8 +162,8 @@ class BibiotecaApplicationTests {
 		Autor novoAutor = autorRepository.save(new Autor("Novo Autor", "Portugal", 2));
 		mockMvc.perform(post("/livros/" + livro.getId())
 						.param("titulo", "Titulo Editado")
-						.param("autorId", novoAutor.getId().toString())
-						.param("categoriaId", categoria.getId().toString())
+						.param("autor.id", novoAutor.getId().toString())
+						.param("categoria.id", categoria.getId().toString())
 						.param("isbn", "999999"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrl("/livros"));
